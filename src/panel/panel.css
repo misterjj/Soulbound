@@ -1,0 +1,111 @@
+/* Panneau de Soulbound : sombre par défaut, clair quand Owlbear Rodeo l'est. */
+:root {
+  --bg: #2a2d3a; --surface: rgb(255 255 255 / 0.06); --surface-hover: rgb(255 255 255 / 0.12);
+  --line: rgb(255 255 255 / 0.12); --text: #eef0f6; --muted: #a9adbd; --accent: #f2c46d;
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #f4f5f8; --surface: rgb(0 0 0 / 0.05); --surface-hover: rgb(0 0 0 / 0.09);
+  --line: rgb(0 0 0 / 0.12); --text: #1d2130; --muted: #5b6070; --accent: #a26a00;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+/* Sous Windows, la liste d'un menu déroulant reprend le fond du menu : semi-transparent, il
+   devient blanc et le texte clair disparaît. Les options ont donc un fond plein. */
+select option { background: var(--bg); color: var(--text); }
+html, body { margin: 0; height: 100%; }
+body { font: 13px/1.4 system-ui, -apple-system, sans-serif; color: var(--text); background: var(--bg); }
+[hidden] { display: none !important; }
+#app { display: flex; flex-direction: column; height: 100%; }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+.bar strong { font-size: 15px; letter-spacing: 0.02em; }
+button { font: inherit; color: inherit; }
+.stop {
+  border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; background: var(--surface); cursor: pointer;
+}
+.stop:hover { background: var(--surface-hover); }
+.stop[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+.tabs { display: flex; gap: 2px; padding: 6px 8px 0; border-bottom: 1px solid var(--line); }
+.tabs button {
+  flex: 1; padding: 6px 4px 7px; border: 0; border-bottom: 2px solid transparent; border-radius: 6px 6px 0 0;
+  background: none; color: var(--muted); cursor: pointer;
+}
+.tabs button:hover { color: var(--text); background: var(--surface); }
+.tabs button[aria-selected="true"] { color: var(--text); font-weight: 600; border-bottom-color: var(--accent); }
+.content { flex: 1; overflow-y: auto; padding: 12px; }
+.soon, .hint { margin: 0; color: var(--muted); }
+.hint { margin: 4px 0 14px 24px; font-size: 12px; }
+.label { margin: 0 0 6px; color: var(--muted); font-size: 12px; }
+/* Titres de section en petites majuscules, comme dans Spellcast FX. */
+p.label { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.switch { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.segmented { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 2px; padding: 2px; border-radius: 8px; background: var(--surface); }
+.segmented button { border: 2px solid transparent; border-radius: 6px; padding: 5px 4px; background: none; color: var(--muted); cursor: pointer; }
+.segmented button:hover { color: var(--text); }
+/* Choix marqué d'une bordure et d'une teinte d'accent, comme dans Spellcast FX. */
+.segmented button[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 22%, transparent); color: var(--text); font-weight: 600; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* Des boutons − et + à la place des petites flèches du navigateur, plus faciles à viser, surtout au doigt. */
+input[type="number"] { appearance: textfield; }
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { appearance: none; margin: 0; }
+.stepper { display: flex; align-items: stretch; flex: none; width: 112px; min-width: 0; }
+.stepper input[type="number"] {
+  flex: 1; width: 100%; min-width: 24px; margin: 0; padding: 2px; border-radius: 0; border-inline: 0; text-align: center;
+}
+.stepper .step {
+  all: unset; box-sizing: border-box; flex: none; display: grid; place-items: center; width: 26px; min-height: 28px;
+  background: var(--surface-hover); color: var(--text); font-size: 14px; font-weight: 600; cursor: pointer; touch-action: manipulation;
+}
+.stepper .step:first-child { border-radius: 6px 0 0 6px; }
+.stepper .step:last-child { border-radius: 0 6px 6px 0; }
+.stepper .step:hover { background: color-mix(in srgb, var(--text) 22%, transparent); }
+.stepper .step:active { background: color-mix(in srgb, var(--accent) 45%, transparent); }
+@media (pointer: coarse) {
+  .stepper { width: 136px; }
+  .stepper .step { width: 36px; min-height: 36px; font-size: 18px; }
+  .stepper input[type="number"] { height: auto; }
+}
+.warning { margin: 0; padding: 6px 8px; border-radius: 6px; background: rgb(255 180 60 / 0.14); color: #ffcf7a; font-size: 12px; }
+:root[data-theme="light"] .warning { color: #8a5600; }
+
+/* --- Soulbound ------------------------------------------------------------------------------- */
+.content { display: flex; flex-direction: column; gap: 14px; }
+section { display: flex; flex-direction: column; gap: 8px; }
+section > .label { margin: 0; }
+.hint.flush { margin: 0; }
+.tabs .tab-icon { flex: 0 0 38px; display: inline-grid; place-items: center; }
+.icon { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.card { display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; border-radius: 8px; background: var(--surface); }
+.card-head { display: flex; align-items: center; gap: 10px; }
+.card-head strong { font-size: 14px; }
+.thumb { flex: none; width: 34px; height: 34px; border-radius: 50%; object-fit: cover; background: var(--surface-hover); }
+.badge { margin-left: auto; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; background: var(--surface-hover); color: var(--muted); }
+.badge.on { background: color-mix(in srgb, var(--accent) 22%, transparent); color: var(--accent); }
+.actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.stop.primary { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 22%, transparent); font-weight: 600; }
+.stop.danger:hover, .confirm { border-color: #c43c3c !important; background: #c43c3c !important; color: #fff !important; }
+.rows { display: flex; flex-direction: column; gap: 4px; }
+.row { display: flex; align-items: center; gap: 10px; padding: 6px 6px 6px 8px; border-radius: 8px; background: var(--surface); }
+.row.away { opacity: 0.75; }
+.row-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.row-text strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row-text small { color: var(--muted); font-size: 11px; }
+.restore { justify-content: flex-start; text-align: left; width: 100%; display: flex; align-items: center; gap: 8px; }
+.restore small { margin-left: auto; color: var(--muted); }
+.icon-button {
+  display: inline-grid; place-items: center; min-width: 30px; height: 30px; padding: 0 6px; border: 1px solid transparent; border-radius: 6px;
+  background: none; color: var(--muted); cursor: pointer; font-size: 12px;
+}
+.icon-button:hover { background: var(--surface-hover); color: #ff8a8a; }
+textarea {
+  width: 100%; min-height: 72px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; resize: vertical;
+  background: var(--surface); color: var(--text); font: 12px/1.4 ui-monospace, monospace;
+}
+textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.about a { color: var(--accent); }
+.about a.patreon { display: inline-block; padding: 6px 12px; border-radius: 8px; background: #ff424d; color: #fff; font-weight: 600; text-decoration: none; }
+.about a.patreon:hover { background: #ff5a63; }
+.about p { margin: 0; }
+.stop:disabled { opacity: 0.45; cursor: not-allowed; }

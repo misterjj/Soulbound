@@ -1,0 +1,16 @@
+{
+  "name": "Soulbound",
+  "version": "0.1.0",
+  "manifest_version": 1,
+  "author": "Jonathan Jorand",
+  "description": "Tokens that remember: their data survives deletion and scene changes.",
+  "icon": "/icon.svg",
+  "action": {
+    "title": "Soulbound",
+    "icon": "/icon.svg",
+    "popover": "/panel.html",
+    "width": 400,
+    "height": 600
+  },
+  "background_url": "/background.html"
+}
