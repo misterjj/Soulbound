@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "test": "vitest run"
+    "test": "vitest run",
+    "deploy": "pnpm build && npx wrangler pages deploy dist --project-name soulbound-owlbear --branch master",
+    "preview": "pnpm build && npx wrangler pages deploy dist --project-name soulbound-owlbear --branch preview"
   },
   "dependencies": {
     "@owlbear-rodeo/sdk": "^3.1.0"

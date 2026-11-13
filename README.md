@@ -28,4 +28,8 @@ pnpm install
 pnpm dev     # http://localhost:5176/manifest.json à ajouter dans Owlbear
 pnpm test
 pnpm build
+pnpm run deploy    # Cloudflare Pages : https://soulbound-owlbear.pages.dev/manifest.json
+pnpm run preview   # branche preview, sans toucher à la production
 ```
+
+`pnpm deploy` (sans `run`) est une commande de pnpm, pas ce script.
